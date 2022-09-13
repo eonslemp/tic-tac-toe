@@ -10,8 +10,25 @@ body {
     background-color: bisque;
     color: var(--green)
 }
+button {
+    height: 50px;
+    font-family:'Arial Narrow';
+    font-size: 30px;
+    border-radius: 5px;
+    background-color: white;
+    color: var(--green)
+
+}
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 h1 {
+    padding: 0;
+    margin: 0;
     font-family:'Arial Narrow';
     font-size: 50px;
     color: var(--green);
@@ -50,13 +67,13 @@ hr {
 .cell {
     height: 200px;
     width:  200px;
-    display: grid;
-    /* justify-content: center;
-    align-items: center; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: var(--green);
     box-shadow: 0, 0, 0, 5px;
     border: 5px solid;
-    font-size: 150px;
-    text-align: center;
+    font-size: 170px;
+    /* text-align: center; */
     
 }
