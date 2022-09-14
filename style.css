@@ -7,6 +7,7 @@
 box-sizing: border-box
 }
 body {
+    grid-template-columns: 1fr 2fr 1fr;
     background-color: bisque;
     color: var(--green)
 }
@@ -16,14 +17,43 @@ button {
     font-size: 30px;
     border-radius: 5px;
     background-color: white;
-    color: var(--green)
-
+    color: var(--green);
+    cursor: pointer;
+}
+/* #crosses {
+    height: 50px;
+    font-family:'Arial Narrow';
+    font-size: 30px;
+    border-radius: 5px;
+    background-color: white;
+    color: var(--green);
+    cursor: pointer;
+}
+#noughts {
+    height: 50px;
+    font-family:'Arial Narrow';
+    font-size: 30px;
+    border-radius: 5px;
+    background-color: white;
+    color: var(--green);
+    cursor: pointer;
+} */
+button:hover {
+    background-color: rgb(143, 206, 202);
+}
+main {
+    justify-content: center;
+    display: flex;
+    align-content: center;
+    margin-right: 500px;
+    margin-left: 0;
 }
 header {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 0;
 }
 
 h1 {
@@ -36,24 +66,30 @@ h1 {
     justify-content: center;
     
 }
-hr {
-    display: flex;
-    justify-content: center;
-    width: 700px;
+/* hr {
+    display: grid;
+    direction: column;
+    justify-content: ;
+    width: 250px;
     height: 10px;
     background-color: var(--green);
-}
+} */
 #game-matrix {
     font-family: cursive;
     display: grid;
     justify-content: center;
     align-content: center;
-    background-color: white;
+    /* background-color: white; */
     width: 600px;
     height: 600px;
     margin: auto;
     flex-wrap: wrap;
+    border-radius: 5px;
+    /* grid-template-columns: 33.333% 33.333% 33.333%; */
     grid-template-columns: repeat(3, auto);
+}
+#game-matrix>*:hover {
+    background-color: rgb(143, 206, 202);
 }
 
 /* .row  {
@@ -74,6 +110,36 @@ hr {
     box-shadow: 0, 0, 0, 5px;
     border: 5px solid;
     font-size: 170px;
+    background-color: white;
+    cursor: pointer;
     /* text-align: center; */
     
 }
+.side-bar {
+    float: left;
+    align-items: center;
+    justify-content: center;
+    font-family:'Arial Narrow';
+    direction: column;
+    width: 25%;
+    margin-top: 10rem;
+    margin-left: 10rem;
+    margin-right: 0;
+    /* margin: 0; */
+}
+.destroyer {
+    display: flex;
+    border: var(--green);
+    justify-content: left;
+}
+.destroyer > * {
+    width: 200px;
+    border: 5px solid var(--green);
+    background-color: white;
+    padding: 5px;
+    cursor: pointer;
+}
+.destroyer > *:hover{
+    background-color: rgb(143, 206, 202);
+}
+
