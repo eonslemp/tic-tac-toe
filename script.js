@@ -10,8 +10,10 @@ let crosses = document.getElementById('crosses')
 function restart(){
     // this function will reset the game state
     cellState = ["", "", "", "", "", "", "", "", ""];
+
     cells.forEach(cell =>{
         cell.innerHTML = "";
+        cell.style.backgroundColor = 'white';
         
     })
     // resets the game status message bar
@@ -59,16 +61,33 @@ noughts.addEventListener('click', selectNoughts)
 
 
 var opponent = null;
+
+let bobColor = 'white'
+
 function selectSpongebob(){
     if(spongebob.style.backgroundColor == 'red'){
         opponent = null;
-        spongebob.style.backgroundColor = 'white'
+        spongebob.style.backgroundColor = 'white';
+
+        spongebob.addEventListener('mouseenter', () =>{
+            spongebob.style.backgroundColor = 'rgb(143, 206, 202)'
+        })
+        spongebob.addEventListener('mouseout', () =>{
+            spongebob.style.backgroundColor = 'white'
+        })
+
     } else {
         opponent = 'spongebob';
         console.log(opponent)
         spongebob.style.backgroundColor = 'red';
         skynet.style.backgroundColor = 'white';
-        }
+        spongebob.removeEventListener('mouseenter', () =>{
+            spongebob.style.backgroundColor = 'rgb(143, 206, 202)'
+        })
+        spongebob.removeEventListener('mouseout', () =>{
+            spongebob.style.backgroundColor = 'white'
+        })
+    }
 }
 
 
@@ -86,21 +105,23 @@ function selectSkynet(){
 // adding event listeners to spongebob for interactivity
 const spongebob = document.getElementById('spongebob')
 spongebob.addEventListener('click', selectSpongebob)
-spongebob.addEventListener('mouseenter', () =>{
-    spongebob.style.backgroundColor = 'rgb(143, 206, 202)';
-})
-spongebob.addEventListener('mouseout', () =>{
-    spongebob.style.backgroundColor = 'white';
-})
+// spongebob.addEventListener('mouseenter', () =>{
+//     spongebob.style.backgroundColor = 'rgb(143, 206, 202)'
+// })
+// spongebob.addEventListener('mouseout', () =>{
+//     spongebob.style.backgroundColor = 'white'
+// })
+
+
 // adding event listeners for interactivity to skynet
 const skynet = document.getElementById('skynet')
 skynet.addEventListener('click', selectSkynet)
-skynet.addEventListener('mouseenter', () => {
-    skynet.style.backgroundColor = 'rgb(143, 206, 202)';
-})
-skynet.addEventListener('mouseout', () => {
-    skynet.style.backgroundColor = 'white';
-})
+// skynet.addEventListener('mouseenter', () => {
+//     skynet.style.backgroundColor = 'rgb(143, 206, 202)'
+// })
+// skynet.addEventListener('mouseout', () => {
+//     skynet.style.backgroundColor = 'white'
+// })
 
 
 
@@ -199,7 +220,7 @@ const winConditions = [
 
 function checkWin(gameArr){
     // this variable stores the value of the current mover to display in case of a win
-    const winner = (whoseMove == "O") ? 'NUAGHTS' : 'CROSSES';
+    const winner = (whoseMove == "O") ? 'NAUGHTS' : 'CROSSES';
 // for loop to check the game array against the various win conditions
     for(let condition of winConditions){
         // these variables store the value of the game array at the indices 
@@ -213,9 +234,12 @@ function checkWin(gameArr){
 // conditional checks the values against each other 
             if(cellA == cellB && cellB == cellC){
 
-                console.log("win")
-    // sets value of game status bar
-                statusMessage.innerText = `${winner} WIN!`;
+        // changes color of winning cells to highlight win
+                document.getElementById(`${condition[0]}`).style.backgroundColor = 'rgb(143, 206, 202)'
+                document.getElementById(`${condition[1]}`).style.backgroundColor = 'rgb(143, 206, 202)'
+                document.getElementById(`${condition[2]}`).style.backgroundColor = 'rgb(143, 206, 202)'
+        // sets value of game status bar
+                statusMessage.innerText = `${winner} WINS!`;
     // sets playAs to null and prevents any further 
     // moves until one of the buttons is clicked
                 playAs = null;
@@ -228,7 +252,7 @@ function checkWin(gameArr){
 // there is a tie
     if(gameArr.includes("") == false){
         console.log('tie')
-        statusMessage.innerText = 'No clear winner';
+        statusMessage.innerText = 'No Winner';
     }
 
  
