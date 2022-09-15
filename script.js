@@ -62,31 +62,31 @@ noughts.addEventListener('click', selectNoughts)
 
 var opponent = null;
 
-let bobColor = 'white'
+// let bobColor = 'white'
 
 function selectSpongebob(){
     if(spongebob.style.backgroundColor == 'red'){
         opponent = null;
         spongebob.style.backgroundColor = 'white';
 
-        spongebob.addEventListener('mouseenter', () =>{
-            spongebob.style.backgroundColor = 'rgb(143, 206, 202)'
-        })
-        spongebob.addEventListener('mouseout', () =>{
-            spongebob.style.backgroundColor = 'white'
-        })
+        // spongebob.addEventListener('mouseenter', () =>{
+        //     spongebob.style.backgroundColor = 'rgb(143, 206, 202)'
+        // })
+        // spongebob.addEventListener('mouseout', () =>{
+        //     spongebob.style.backgroundColor = 'white'
+        // })
 
     } else {
         opponent = 'spongebob';
         console.log(opponent)
         spongebob.style.backgroundColor = 'red';
         skynet.style.backgroundColor = 'white';
-        spongebob.removeEventListener('mouseenter', () =>{
-            spongebob.style.backgroundColor = 'rgb(143, 206, 202)'
-        })
-        spongebob.removeEventListener('mouseout', () =>{
-            spongebob.style.backgroundColor = 'white'
-        })
+    //     spongebob.removeEventListener('mouseenter', () =>{
+    //         spongebob.style.backgroundColor = 'rgb(143, 206, 202)'
+    //     })
+    //     spongebob.removeEventListener('mouseout', () =>{
+    //         spongebob.style.backgroundColor = 'white'
+    //     })
     }
 }
 

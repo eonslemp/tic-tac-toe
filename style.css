@@ -150,9 +150,9 @@ h1 {
     padding: 5px;
     cursor: pointer;
 }
-/* .destroyer > *:hover{
+.destroyer > *:hover{
     background-color: rgb(143, 206, 202);
-} */
+}
 h2 {
     font-size: 40px;
 }
