@@ -115,6 +115,15 @@ h1 {
     /* text-align: center; */
     
 }
+
+#game-status {
+    font-family:'Arial Narrow';
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    font-size: 40px;
+    margin-bottom: 20px;
+}
 .side-bar {
     float: left;
     align-items: center;
@@ -122,7 +131,7 @@ h1 {
     font-family:'Arial Narrow';
     direction: column;
     width: 25%;
-    margin-top: 10rem;
+    margin-top: 2rem;
     margin-left: 10rem;
     margin-right: 0;
     /* margin: 0; */
@@ -131,6 +140,7 @@ h1 {
     display: flex;
     border: var(--green);
     justify-content: left;
+
 }
 .destroyer > * {
     width: 200px;
@@ -139,7 +149,12 @@ h1 {
     padding: 5px;
     cursor: pointer;
 }
-.destroyer > *:hover{
+/* .destroyer > *:hover{
     background-color: rgb(143, 206, 202);
+} */
+h2 {
+    font-size: 40px;
 }
-
+h3 {
+    font-size: 30px;
+}
