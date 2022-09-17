@@ -10,6 +10,13 @@ let crosses = document.getElementById('crosses')
 function restart(){
     // this function will reset the game state
     cellState = ["", "", "", "", "", "", "", "", ""];
+    opponent = null;
+    playAs = null;
+    noughts.style.backgroundColor = 'white';
+    crosses.style.backgroundColor = 'white';
+    skynet.style.backgroundColor = 'white';
+    spongebob.style.backgroundColor = 'white';
+
 
     cells.forEach(cell =>{
         cell.innerHTML = "";
@@ -22,33 +29,21 @@ function restart(){
 
 function selectCrosses(){
     restart();
-    if(crosses.style.backgroundColor == 'rgb(143, 206, 202)'){
-        crosses.style.backgroundColor = 'white';
-        whoseMove = "X";
-        playAs = null;
-        // console.log(playAs)
-    } else {
-        whoseMove = "X";
-        playAs = 'X';
-        crosses.style.backgroundColor = 'rgb(143, 206, 202)';
-        noughts.style.backgroundColor = 'white';
-        }
+    whoseMove = "X";
+    playAs = 'X';
+    crosses.style.backgroundColor = 'rgb(143, 206, 202)';
+    noughts.style.backgroundColor = 'white';
     // console.log(playAs)
 }
 crosses.addEventListener('click', selectCrosses)
 
 function selectNoughts(){
+
     restart();
-    if(noughts.style.backgroundColor == 'rgb(143, 206, 202)'){
-        noughts.style.backgroundColor = 'white'
-        playAs = null;
-        whoseMove = "X";
-    } else {
-        playAs = 'O';
-        whoseMove = "X";
-        noughts.style.backgroundColor = 'rgb(143, 206, 202)';
-        crosses.style.backgroundColor = 'white';
-        }
+    playAs = 'O';
+    whoseMove = "X";
+    noughts.style.backgroundColor = 'rgb(143, 206, 202)';
+    crosses.style.backgroundColor = 'white';
     // console.log(playAs)
 }
 
@@ -66,8 +61,9 @@ var opponent = null;
 
 function selectSpongebob(){
     if(spongebob.style.backgroundColor == 'red'){
-        opponent = null;
-        spongebob.style.backgroundColor = 'white';
+        // opponent = null;
+        // spongebob.style.backgroundColor = 'white';
+        restart();
 
         // spongebob.addEventListener('mouseenter', () =>{
         //     spongebob.style.backgroundColor = 'rgb(143, 206, 202)'
@@ -76,20 +72,56 @@ function selectSpongebob(){
         //     spongebob.style.backgroundColor = 'white'
         // })
 
-    } else {
+    } else if(playAs == 'O') {
         opponent = 'spongebob';
-        console.log(opponent)
+        // console.log(opponent)
         spongebob.style.backgroundColor = 'red';
         skynet.style.backgroundColor = 'white';
+        spongeMove();
+        // changeMover();
     //     spongebob.removeEventListener('mouseenter', () =>{
     //         spongebob.style.backgroundColor = 'rgb(143, 206, 202)'
     //     })
     //     spongebob.removeEventListener('mouseout', () =>{
     //         spongebob.style.backgroundColor = 'white'
     //     })
+    } else if (playAs == 'X'){
+        opponent = 'spongebob';
+        // console.log(opponent)
+        spongebob.style.backgroundColor = 'red';
+        skynet.style.backgroundColor = 'white';
     }
+    //     spongebob.removeEventListener('mouseen
 }
 
+
+// function selectSkynet(){
+//     if(skynet.style.backgroundColor == 'red'){
+//         restart()
+        
+//     } else if (playAs == "O"){
+//         opponent = 'skynet';
+//         // console.log(opponent)
+//         skynet.style.backgroundColor = 'red';
+//         spongebob.style.backgroundColor = 'white';
+//         document.getElementById(4) = "X";
+//         cellState[4] = "X"
+//         changeMover();
+//         }
+    
+// }
+
+// function selectSkynet(){
+//     if(skynet.style.backgroundColor == 'red'){
+//         restart()
+        
+//     } else {
+//         opponent = 'skynet';
+//         console.log(opponent)
+//         skynet.style.backgroundColor = 'red';
+//         spongebob.style.backgroundColor = 'white';
+//         }
+// }
 
 function selectSkynet(){
     if(skynet.style.backgroundColor == 'red'){
@@ -102,29 +134,49 @@ function selectSkynet(){
         spongebob.style.backgroundColor = 'white';
         }
 }
-// adding event listeners to spongebob for interactivity
-const spongebob = document.getElementById('spongebob')
-spongebob.addEventListener('click', selectSpongebob)
-// spongebob.addEventListener('mouseenter', () =>{
-//     spongebob.style.backgroundColor = 'rgb(143, 206, 202)'
-// })
-// spongebob.addEventListener('mouseout', () =>{
-//     spongebob.style.backgroundColor = 'white'
-// })
 
-
-// adding event listeners for interactivity to skynet
 const skynet = document.getElementById('skynet')
 skynet.addEventListener('click', selectSkynet)
-// skynet.addEventListener('mouseenter', () => {
-//     skynet.style.backgroundColor = 'rgb(143, 206, 202)'
-// })
-// skynet.addEventListener('mouseout', () => {
-//     skynet.style.backgroundColor = 'white'
-// })
 
+const spongebob = document.getElementById('spongebob')
+spongebob.addEventListener('click', selectSpongebob)
 
+// function spongeMove(){
+//     if(playAs == "O"){
+//         indexArr = getAllIndices(cellState, "")
+//         let move = indexArr[Math.floor(Math.random()*indexArr.length)]
+//         cellState[move] = whoseMove;
+//         document.getElementById(`${move}`).innerText = whoseMove;
+//         checkWin(cellState);
+//         changeMover();
+//         return
+//     }else if (playAs == "X") {
+//         changeMover();
+//         indexArr = getAllIndices(cellState, "")
+//         let move = indexArr[Math.floor(Math.random()*indexArr.length)]
+//         cellState[move] = whoseMove;
+//         document.getElementById(`${move}`).innerText = whoseMove;
+//         checkWin(cellState);
+//         changeMover();
+//         return
+//     }
+// }
 
+function spongeMove(){
+        // changeMover();
+        indexArr = getAllIndices(cellState, "")
+        let move = indexArr[Math.floor(Math.random()*indexArr.length)]
+        // console.log(whoseMove)
+        // console.log(`${move}`)
+        cellState[move] = whoseMove;
+        document.getElementById(move).innerText = whoseMove;
+        checkWin(cellState);
+        changeMover();
+        // console.log(whoseMove)
+        // console.log(playAs)
+        return
+    
+}
 
 
 
@@ -134,23 +186,67 @@ function changeMover(){
     whoseMove = (whoseMove == "X") ? "O" : "X";
 }
 
+function opponentMove(){
+    if(opponent == null){
+        changeMover();
+        return
+    } else if (opponent == 'spongebob'){
+
+        spongeMove();
+    }
+}
+
+function getAllIndices(arr, val){
+    var indices = [], i = -1;
+    while ((i = arr.indexOf(val, i+1)) != -1){
+        indices.push(i);
+    }
+    // console.log(indices)
+    return indices
+}
+
+
 
 cells.forEach( cell => {
     // this arrow fx will add game logic functionality to each game matrix cell
     cell.addEventListener('click', () => {
         // conditional verifies that the cell is not already marked and that 
         // the player has chosen crosses or noughts
-        if(cell.innerHTML == "" && playAs != null){
-            // if above conditions are met this line 
-            // assigns the appropriate character to the cell
+        if(cell.innerHTML == "" && playAs == 'X' && opponent == null){
+
             cell.innerHTML = whoseMove;
             // this line updates the cellstate variable to reflect the board
             cellState[Number(cell.getAttribute("id"))] = whoseMove;
             // checks status of the game
             checkWin(cellState);
-            // alternates the mover
             changeMover();
+        } else if (cell.innerHTML == "" && playAs == 'X' && opponent == 'spongebob'){
+            // console.log(opponent)
+            cell.innerHTML = whoseMove;
+            cellState[Number(cell.getAttribute("id"))] = whoseMove;
+            // console.log(cellState)
+            console.log(whoseMove);
+            checkWin(cellState);
+            if (playAs == null ){return}
+            changeMover();
+            // console.log(whoseMove)
+            // console.log(whoseMove);
+            spongeMove();
+            // console.log(whoseMove)
+        } else if( cell.innerHTML == "" && playAs == 'O' && opponent == 'spongebob'){
+            // console.log(whoseMove)
+            // changeMover();      
+            // console.log(whoseMove);
+            cell.innerHTML = whoseMove;
+            cellState[Number(cell.getAttribute("id"))] = whoseMove;
+            console.log(whoseMove)
+            checkWin(cellState);
+            if (playAs == null ){return}
+            changeMover();
+            spongeMove();
+            // console.log(whoseMove)
         } 
+
        
     })
 })
@@ -220,7 +316,8 @@ const winConditions = [
 
 function checkWin(gameArr){
     // this variable stores the value of the current mover to display in case of a win
-    const winner = (whoseMove == "O") ? 'NAUGHTS' : 'CROSSES';
+        const winner = (whoseMove == "O") ? 'NAUGHTS' : 'CROSSES';
+
 // for loop to check the game array against the various win conditions
     for(let condition of winConditions){
         // these variables store the value of the game array at the indices 
@@ -239,6 +336,7 @@ function checkWin(gameArr){
                 document.getElementById(`${condition[1]}`).style.backgroundColor = 'rgb(143, 206, 202)'
                 document.getElementById(`${condition[2]}`).style.backgroundColor = 'rgb(143, 206, 202)'
         // sets value of game status bar
+                // statusMessage.innerText = `${whoseMove} WINS!`;
                 statusMessage.innerText = `${winner} WINS!`;
     // sets playAs to null and prevents any further 
     // moves until one of the buttons is clicked
