@@ -95,21 +95,31 @@ function selectSpongebob(){
 }
 
 
-// function selectSkynet(){
-//     if(skynet.style.backgroundColor == 'red'){
-//         restart()
+function selectSkynet(){
+    if(skynet.style.backgroundColor == 'red'){
+        restart()
         
-//     } else if (playAs == "O"){
-//         opponent = 'skynet';
-//         // console.log(opponent)
-//         skynet.style.backgroundColor = 'red';
-//         spongebob.style.backgroundColor = 'white';
-//         document.getElementById(4) = "X";
-//         cellState[4] = "X"
-//         changeMover();
-//         }
+    } else if (playAs == "O"){
+        opponent = 'skynet';
+        // console.log(opponent)
+        // playAs = "O"
+        skynet.style.backgroundColor = 'red';
+        spongebob.style.backgroundColor = 'white';
+        document.getElementById("4").textContent = "X";
+        cellState[4] = "X"
+        changeMover();
+        } 
+    else if (playAs == "X"){
+        skynet.style.backgroundColor = 'red';
+        spongebob.style.backgroundColor = 'white';
+        opponent = 'skynet';
+        // console.log(whoseMove)
+        // changeMover();
+        // playAs = "X"
+        
+        }
     
-// }
+}
 
 // function selectSkynet(){
 //     if(skynet.style.backgroundColor == 'red'){
@@ -123,17 +133,17 @@ function selectSpongebob(){
 //         }
 // }
 
-function selectSkynet(){
-    if(skynet.style.backgroundColor == 'red'){
-        opponent = null;
-        skynet.style.backgroundColor = 'white';
-    } else {
-        opponent = 'skynet';
-        console.log(opponent)
-        skynet.style.backgroundColor = 'red';
-        spongebob.style.backgroundColor = 'white';
-        }
-}
+// function selectSkynet(){
+//     if(skynet.style.backgroundColor == 'red'){
+//         opponent = null;
+//         skynet.style.backgroundColor = 'white';
+//     } else {
+//         opponent = 'skynet';
+//         console.log(opponent)
+//         skynet.style.backgroundColor = 'red';
+//         spongebob.style.backgroundColor = 'white';
+//         }
+// }
 
 const skynet = document.getElementById('skynet')
 skynet.addEventListener('click', selectSkynet)
@@ -178,7 +188,9 @@ function spongeMove(){
     
 }
 
+// function skyMove(){
 
+// }
 
 
 function changeMover(){
@@ -205,7 +217,75 @@ function getAllIndices(arr, val){
     return indices
 }
 
+function skyMove(boardState, player){
+    let openIndices = getAllIndices(boardState, "")
+    console.log(openIndices)
 
+    let mover = player;
+
+    mover = (mover == "X") ? "O" : "X";
+    console.log('mover: ' + mover)
+    console.log('play as: ' + playAs)
+    if(checkWinMiniMax(boardState) == 10){
+        if(mover == playAs){
+        console.log(-10)
+        return {score: -10};
+        } else if (mover != playAs){
+            // console.log(mover, playAs)
+            console.log(10)
+    
+            return {score: 10}
+        }
+    } else if(openIndices.length == 0){
+        // console.log(0)
+        return {score: 0}
+    }
+
+
+    // changeMover();
+    let moves = [];
+    for (let i = 0; i < openIndices.length; i++){
+        var move = {};
+        move.index = boardState[openIndices[i]];
+        boardState[openIndices[i]] = mover;
+
+        if(mover != playAs){
+            let result = skyMove(boardState, mover);
+            move.score = result.score;
+        } 
+        else if(mover == playAs){
+            let result = skyMove(boardState, mover);
+            move.score = result.score;
+        }
+    
+
+    boardState[openIndices[i]] = move.index;
+    moves.push(move);
+    }
+    var bestMove; 
+    if(mover != playAs) {
+        var bestScore = 10000;
+        for(let i = 0; i < moves.length; i++){
+            if (moves[i].score < bestScore) {
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+
+    }else {
+
+        var bestScore = -10000;
+        for(let i = 0; i < moves.length; i++){
+            if (moves[i].score > bestScore) {
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+    }
+    console.log(mover)
+    return moves[bestMove]
+
+}
 
 cells.forEach( cell => {
     // this arrow fx will add game logic functionality to each game matrix cell
@@ -246,6 +326,20 @@ cells.forEach( cell => {
             spongeMove();
             // console.log(whoseMove)
         } 
+        else if (cell.innerHTML == "" && playAs == "X" && opponent == 'skynet'){
+            cell.innerHTML = whoseMove;
+            cellState[Number(cell.getAttribute("id"))] = "X";
+            checkWinMiniMax(cellState);
+            changeMover();
+            // document.getElementById(skyMove(cellState, opponent)).innerText = "O";
+            console.log(skyMove(cellState, opponent))
+            console.log(cellState)
+            // changeMover();
+            console.log(whoseMove)
+            // checkWin()
+            // checkWin();
+        } 
+        // else if (cell.innerHTML == "" && playAs == "O" && opponent == 'skynet'){}
 
        
     })
@@ -341,7 +435,9 @@ function checkWin(gameArr){
     // sets playAs to null and prevents any further 
     // moves until one of the buttons is clicked
                 playAs = null;
-                return cellA, cellB, cellC
+                
+                // return cellA, cellB, cellC
+                return 10
             }
         }
     }
@@ -349,8 +445,54 @@ function checkWin(gameArr){
 // if not, and the above win conditions have not been observed then 
 // there is a tie
     if(gameArr.includes("") == false){
-        console.log('tie')
-        statusMessage.innerText = 'No Winner';
+        console.log('stalemate')
+        statusMessage.innerText = 'Stalemate.';
+        return 0
+    }
+
+ 
+}
+
+function checkWinMiniMax(gameArr){
+    // this variable stores the value of the current mover to display in case of a win
+        const winner = (whoseMove == "O") ? 'NAUGHTS' : 'CROSSES';
+
+// for loop to check the game array against the various win conditions
+    for(let condition of winConditions){
+        // these variables store the value of the game array at the indices 
+        // relevant to the different win conditions
+        const cellA = gameArr[condition[0]];
+        const cellB = gameArr[condition[1]];
+        const cellC = gameArr[condition[2]];
+// this conditional verifies that at least one of the variables 
+// is not a default setting for comparison in the next conditional
+        if(cellA != ""){
+// conditional checks the values against each other 
+            if(cellA == cellB && cellB == cellC){
+
+        // changes color of winning cells to highlight win
+                document.getElementById(`${condition[0]}`).style.backgroundColor = 'rgb(143, 206, 202)'
+                document.getElementById(`${condition[1]}`).style.backgroundColor = 'rgb(143, 206, 202)'
+                document.getElementById(`${condition[2]}`).style.backgroundColor = 'rgb(143, 206, 202)'
+        // sets value of game status bar
+                // statusMessage.innerText = `${whoseMove} WINS!`;
+                // statusMessage.innerText = `${winner} WINS!`;
+    // sets playAs to null and prevents any further 
+    // moves until one of the buttons is clicked
+                // playAs = null;
+                
+                // return cellA, cellB, cellC
+                return 10
+            }
+        }
+    }
+// conditional checks if any values remain to be filled 
+// if not, and the above win conditions have not been observed then 
+// there is a tie
+    if(gameArr.includes("") == false){
+        console.log('stalemate')
+        // statusMessage.innerText = 'Stalemate.';
+        return 0
     }
 
  

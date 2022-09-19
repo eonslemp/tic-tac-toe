@@ -144,8 +144,8 @@ h1 {
 
 }
 .destroyer > * {
-    width: 300px;
-    border: 10px solid var(--green);
+    width: 200px;
+    border: 5px solid var(--green);
     background-color: white;
     padding: 10px;
     cursor: pointer;
